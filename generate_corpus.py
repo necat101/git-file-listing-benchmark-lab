@@ -72,7 +72,7 @@ def generate_corpus(base_dir="corpus"):
     
     run_cmd("git add . && git commit -m 'Initial'", cwd=med_dir)
     
-    # Large repo
+    # Large repo - FIXED: was creating only 100 files due to dir reuse bug
     print("\n3. Large repo (2000 files)")
     large_dir = base / "large"
     large_dir.mkdir(exist_ok=True)
@@ -81,7 +81,7 @@ def generate_corpus(base_dir="corpus"):
     run_cmd("git config user.name 'Test'", cwd=large_dir)
     
     for i in range(200):
-        subdir = large_dir / f"dir_{i//20:02d}"
+        subdir = large_dir / f"dir_{i:02d}"
         subdir.mkdir(exist_ok=True)
         for j in range(10):
             (subdir / f"f_{j:02d}.dat").write_text("x" * 100)
